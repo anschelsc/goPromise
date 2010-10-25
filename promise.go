@@ -6,12 +6,14 @@
 //delayed evaluation
 package promise
 
+import "sync"
+
 //A Promise contains a function, which will be evaluated
 //at most once, whenever Force() is called.
 type Promise struct {
 	f     func() interface{}
 	value interface{}
-	done  bool
+	once  sync.Once
 }
 
 //Delay(f) takes a function and returns a Promise, which will
@@ -23,9 +25,6 @@ func Delay(f func() interface{}) *Promise {
 //p.Force() evaluates p only if it has never been evaluated
 //before--otherwise it returns the cached result.
 func (p *Promise) Force() interface{} {
-	if !p.done {
-		p.value = p.f()
-		p.done = true
-	}
+	p.once.Do(func() { p.value = p.f() })
 	return p.value
 }
