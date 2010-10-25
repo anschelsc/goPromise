@@ -17,7 +17,8 @@ type Promise struct {
 }
 
 //Delay(f) takes a function and returns a Promise, which will
-//evaluate f if and when necessary.
+//evaluate f if and when necessary. f WILL ONLY BE RUN ONCE,
+//so take this into account if it has side-effects.
 func Delay(f func() interface{}) *Promise {
 	return &Promise{f: f}
 }
