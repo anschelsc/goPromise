@@ -24,7 +24,7 @@ func Delay(f func() interface{}) *Promise {
 }
 
 //p.Force() evaluates p only if it has never been evaluated
-//before--otherwise it returns the cached result.
+//before--otherwise it returns the memoized result.
 func (p *Promise) Force() interface{} {
 	p.once.Do(func() { p.value = p.f() })
 	return p.value
