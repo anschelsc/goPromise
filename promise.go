@@ -20,8 +20,8 @@ type Promise struct {
 	once   sync.Once
 }
 
-//Delay(f) takes a function and returns a Promise, which will
-//evaluate f if and when necessary. f WILL ONLY BE RUN ONCE,
+//Delay(f, args) takes a function and returns a Promise, which will
+//evaluate f(args) if and when necessary. f WILL ONLY BE RUN ONCE,
 //so take this into account if it has side-effects.
 func Delay(f interface{}, args ...interface{}) *Promise {
 	return &Promise{f: f, args: args}
