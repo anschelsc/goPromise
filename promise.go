@@ -31,7 +31,7 @@ func Delay(f interface{}, args ...interface{}) *Promise {
 //before--otherwise it returns the memoized result.
 func (p *Promise) Force() []interface{} {
 	p.once.Do(func() {
-		fV := reflect.NewValue(p.f).(*reflect.FuncValue)
+		fV := reflect.NewValue(p.f)
 		in := make([]reflect.Value, len(p.args))
 		for i, v := range p.args {
 			in[i] = reflect.NewValue(v)
